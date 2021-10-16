@@ -43,8 +43,10 @@ public class Parser {
     protected boolean isExit;
     private static Logger logger = Logger.getLogger(Parser.class.getName());
 
+
     public Parser() {
         this.isExit = false;
+        logger.setLevel(Level.OFF);
     }
 
     /**

@@ -9,6 +9,7 @@ public class List {
     private static final Logger logger = Logger.getLogger(List.class.getName());
 
     public List() {
+        logger.setLevel(Level.OFF);
     }
 
     boolean isEmpty(Module module) {

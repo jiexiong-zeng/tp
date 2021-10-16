@@ -24,6 +24,7 @@ public class TaskList {
 
 
     public TaskList() {
+        logger.setLevel(Level.OFF);
         this.taskList = new ArrayList<>();
     }
 

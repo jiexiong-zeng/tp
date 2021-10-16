@@ -17,6 +17,7 @@ public class ModuleList {
     private ArrayList<Module> moduleList;
 
     public ModuleList() {
+        logger.setLevel(Level.OFF);
         this.moduleList = new ArrayList<>();
     }
 

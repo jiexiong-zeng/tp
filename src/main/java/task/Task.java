@@ -19,6 +19,7 @@ public class Task {
      * @param description The description of the task given by the user
      */
     public Task(String description, String date) {
+        logger.setLevel(Level.OFF);
         setDescription(description);
         setDate(date);
         setDone(false);

@@ -23,6 +23,7 @@ public class StorageDecoder {
     private static final Logger logger = Logger.getLogger(StorageDecoder.class.getName());
 
     public static ModuleList decodeJsonToModuleList() {
+        logger.setLevel(Level.OFF);
         ObjectMapper objectMapper = new ObjectMapper();
         ModuleList modules = new ModuleList();
         if (!Files.exists(FILE_PATH)) {

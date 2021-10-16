@@ -20,6 +20,7 @@ public class Module {
     private static final Logger logger = Logger.getLogger(StorageDecoder.class.getName());
 
     public Module(String moduleName) {
+        logger.setLevel(Level.OFF);
         assert !moduleName.equals("");
         this.moduleName = moduleName;
         this.letterGrade = null;

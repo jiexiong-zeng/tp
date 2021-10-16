@@ -25,6 +25,7 @@ public class StorageEncoder {
     private static final Logger logger = Logger.getLogger(StorageEncoder.class.getName());
 
     public static void encodeAndSaveModuleListToJson(ModuleList moduleList) {
+        logger.setLevel(Level.OFF);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             if (!Files.exists(DIRECTORY_PATH)) {
