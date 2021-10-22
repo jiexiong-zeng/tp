@@ -2,9 +2,13 @@ package command.storage;
 
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import exceptions.ExceptionMessages;
 import exceptions.NoCapExceptions;
 import module.ModuleList;
+import semester.Semester;
+import semester.SemesterList;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,11 +26,17 @@ public class StorageEncoder {
     private static final Path DIRECTORY_PATH = Paths.get(ROOT, "data");
 
     //Logger object
-    private static final Logger logger = Logger.getLogger(StorageEncoder.class.getName());
+    private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+<<<<<<< HEAD
     public static void encodeAndSaveModuleListToJson(ModuleList moduleList) {
         logger.setLevel(Level.OFF);
         ObjectMapper objectMapper = new ObjectMapper();
+=======
+    public static void encodeAndSaveSemesterListToJson(SemesterList semesterList) {
+        ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        objectMapper.registerModule(new JavaTimeModule());
+>>>>>>> bf5859bcb1871d8b2b8e71a5a49648b6094e179f
         try {
             if (!Files.exists(DIRECTORY_PATH)) {
                 createDataDirectory();
@@ -34,7 +44,7 @@ public class StorageEncoder {
             if (!Files.exists(FILE_PATH)) {
                 createFile();
             }
-            objectMapper.writeValue(new File(FILE_PATH.toString()), moduleList);
+            objectMapper.writeValue(new File(FILE_PATH.toString()), semesterList);
             logger.log(Level.INFO, "File saved");
         } catch (NoCapExceptions e) {
             System.out.println(e.getMessage());

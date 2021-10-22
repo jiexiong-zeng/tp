@@ -1,4 +1,4 @@
-package module;
+package schedule;
 
 import java.time.Duration;
 import java.time.LocalTime;

@@ -87,6 +87,13 @@ Examples:
 * `/m CS2113 addgrade A`
 * `/m MA1508 addgrade B-`
 
+## Add credit : `/m <module> addcredit`
+Adds a credit to a module   
+Format: `/m MODULENAME addcredit DESCRIPTION`  
+Examples:
+* `/m CS2113 addcredit 4`
+* `/m CG1111 addcredit 6`
+
 ## Delete classes: `/m <module> deleteclass`
 Deletes all classes from a module  
 Format: `/m MODULENAME deleteclass`  

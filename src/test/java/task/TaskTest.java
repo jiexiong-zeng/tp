@@ -1,13 +1,11 @@
 package task;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class TaskTest {
-
     @Test
     void markDone_success() {
         Task task = new Task("Submit Assignment 1", "19/09/2021 1600");
@@ -20,7 +18,7 @@ public class TaskTest {
         Task task = new Task("Submit Assignment 1", "19/09/2021 1600");
         task.markDone();
         task.createStatusIcon();
-        assertEquals("[X] ", task.createStatusIcon());
+        assertEquals("[X]", task.createStatusIcon());
     }
 
     @Test

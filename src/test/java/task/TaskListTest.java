@@ -1,8 +1,13 @@
 package task;
 
+
+import command.parser.DateParser;
 import org.junit.jupiter.api.Test;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 
 
 public class TaskListTest {
+    protected static final LocalDateTime refDate = LocalDateTime.now().withHour(0);
+    protected static final DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy hhmm");
+    protected static final String DATE_A = refDate.plusDays(1).plusHours(10).format(format);
+    protected static final String DATE_B = refDate.plusDays(6).plusHours(12).format(format);
+    protected static final String DATE_C = refDate.plusDays(13).plusHours(15).format(format);
+    protected static final String DATE_D = refDate.plusYears(2).plusHours(15).format(format);
+    protected static final String DATE_E = refDate.plusMonths(2).plusHours(15).format(format);
+    protected static final String DATE_OVERDUE = refDate.minusMonths(2).plusHours(15).format(format);
 
     @Test
     void get_success() {
@@ -105,10 +118,10 @@ public class TaskListTest {
         a.printTasks(a.taskList);
         List<String> actualLines = List.of(read.toString().split("/n"));
         List<String> expectedLines = Collections.singletonList(
-                  "1.[ ] Read Book C by: 14 Dec 2021 04:00 PM" + System.lineSeparator()
-                + "2.[ ] Read Book B by: 13 Dec 2021 04:00 PM" + System.lineSeparator()
-                + "3.[ ] Read Book A by: 12 Dec 2021 04:00 PM" + System.lineSeparator()
-                + "4.[ ] Read Book D by: 12 Dec 2021 11:00 AM" + System.lineSeparator());
+                "1.[ ] Read Book C by: 14 Dec 2021 04:00 PM" + System.lineSeparator()
+                        + "2.[ ] Read Book B by: 13 Dec 2021 04:00 PM" + System.lineSeparator()
+                        + "3.[ ] Read Book A by: 12 Dec 2021 04:00 PM" + System.lineSeparator()
+                        + "4.[ ] Read Book D by: 12 Dec 2021 11:00 AM" + System.lineSeparator());
         assertLinesMatch(expectedLines, actualLines);
     }
 
@@ -116,18 +129,20 @@ public class TaskListTest {
         return Collections.singletonList("Task List for " + module.toUpperCase(Locale.ROOT) + ":"
                 + System.lineSeparator()
                 + "There are " + taskCount + " tasks due within 7 days" + System.lineSeparator()
-                + "1.[ ] Read Book C by: 15 Oct 2021 04:00 PM" + System.lineSeparator()
-                + "2.[ ] Read Book B by: 14 Oct 2021 04:00 PM" + System.lineSeparator()
-                + "3.[ ] Read Book A by: 14 Oct 2021 12:00 PM" + System.lineSeparator());
+                + "1.[ ] Read Book B by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_B))
+                + System.lineSeparator()
+                + "2.[ ] Read Book A by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_A))
+                + System.lineSeparator());
     }
 
     @Test
     void showAllWeekly_success() {
         TaskList a = new TaskList();
-        a.addTask("cs1010", "Read Book C /by 15/10/2021 1600");
-        a.addTask("cs1010", "Read Book B /by 14/10/2021 1600");
-        a.addTask("cs1010", "Read Book A /by 14/10/2021 1200");
-        a.addTask("cs1010", "Read Book D /by 30/10/2021 1100");
+        //a.addTask("cs1010", "Read Book C /by ");
+        a.addTask("cs1010", "Read Book B /by " + DATE_B);
+        a.addTask("cs1010", "Read Book A /by " + DATE_A);
+        a.addTask("cs1010", "Read Book C /by " + DATE_C);
+
         // Create a stream to hold the output
         String module = "moduleName";
         ByteArrayOutputStream read = new ByteArrayOutputStream();
@@ -145,22 +160,22 @@ public class TaskListTest {
         return Collections.singletonList("Task List for " + module.toUpperCase(Locale.ROOT) + ":"
                 + System.lineSeparator()
                 + "There are " + taskCount + " tasks due within a month" + System.lineSeparator()
-                + "1.[ ] Read Book D by: 6 Nov 2021 04:00 PM" + System.lineSeparator()
-                + "2.[ ] Read Book E by: 13 Oct 2021 11:00 AM" + System.lineSeparator()
-                + "3.[ ] Read Book F by: 30 Oct 2021 11:00 AM" + System.lineSeparator()
-                + "4.[ ] Read Book G by: 14 Oct 2021 11:00 AM" + System.lineSeparator());
+                + "1.[ ] Read Book B by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_B))
+                + System.lineSeparator()
+                + "2.[ ] Read Book A by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_A))
+                + System.lineSeparator()
+                + "3.[ ] Read Book C by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_C))
+                + System.lineSeparator());
     }
 
     @Test
     void showAllMonthly_success() {
         TaskList a = new TaskList();
-        a.addTask("cs1010", "Read Book A /by 01/01/2022 1600");
-        a.addTask("cs1010", "Read Book B /by 01/04/2022 1600");
-        a.addTask("cs1010", "Read Book C /by 03/01/2022 1600");
-        a.addTask("cs1010", "Read Book D /by 06/11/2021 1600");
-        a.addTask("cs1010", "Read Book E /by 13/10/2021 1100");
-        a.addTask("cs1010", "Read Book F /by 30/10/2021 1100");
-        a.addTask("cs1010", "Read Book G /by 14/10/2021 1100");
+        a.addTask("cs1010", "Read Book B /by " + DATE_B);
+        a.addTask("cs1010", "Read Book A /by " + DATE_A);
+        a.addTask("cs1010", "Read Book D /by " + DATE_D);
+        a.addTask("cs1010", "Read Book C /by " + DATE_C);
+        a.addTask("cs1010", "Read Book E /by " + DATE_E);
         // Create a stream to hold the output
         ByteArrayOutputStream read = new ByteArrayOutputStream();
         PrintStream save = new PrintStream(read);
@@ -178,19 +193,27 @@ public class TaskListTest {
         return Collections.singletonList("Task List for " + module.toUpperCase(Locale.ROOT) + ":"
                 + System.lineSeparator()
                 + "There are " + taskCount + " tasks due within a year" + System.lineSeparator()
-                + "1.[ ] Read Book E by: 1 Jan 2022 11:00 AM" + System.lineSeparator()
-                + "2.[ ] Read Book F by: 30 Dec 2021 11:00 AM" + System.lineSeparator());
+                + "1.[ ] Read Book C by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_C))
+                + System.lineSeparator()
+                + "2.[ ] Read Book B by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_B))
+                + System.lineSeparator()
+                + "3.[ ] Read Book A by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_A))
+                + System.lineSeparator()
+                + "4.[ ] Read Book E by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_E))
+                + System.lineSeparator()
+                + "5.[LATE][ ] Read Book F by: " + DateParser.dateStringOutput(DateParser.parseDate(DATE_OVERDUE))
+                + System.lineSeparator());
     }
 
     @Test
     void showAllYearly_success() {
         TaskList a = new TaskList();
-        a.addTask("cs1010", "Read Book C /by 01/01/2021 1600");
-        a.addTask("cs1010", "Read Book B /by 03/01/2021 1600");
-        a.addTask("cs1010", "Read Book A /by 06/01/2021 1600");
-        a.addTask("cs1010", "Read Book D /by 13/01/2021 1100");
-        a.addTask("cs1010", "Read Book E /by 01/01/2022 1100");
-        a.addTask("cs1010", "Read Book F /by 30/12/2021 1100");
+        a.addTask("cs1010", "Read Book C /by " + DATE_C);
+        a.addTask("cs1010", "Read Book B /by " + DATE_B);
+        a.addTask("cs1010", "Read Book A /by " + DATE_A);
+        a.addTask("cs1010", "Read Book D /by " + DATE_D);
+        a.addTask("cs1010", "Read Book E /by " + DATE_E);
+        a.addTask("cs1010", "Read Book F /by " + DATE_OVERDUE);
         // Create a stream to hold the output
         ByteArrayOutputStream read = new ByteArrayOutputStream();
         PrintStream save = new PrintStream(read);

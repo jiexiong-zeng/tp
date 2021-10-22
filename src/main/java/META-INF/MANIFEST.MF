@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 Manifest-Version: 1.0
 Main-Class: command.NoCap
 
+=======
+Manifest-Version: 1.0
+Main-Class: command.NoCap
+
+>>>>>>> bf5859bcb1871d8b2b8e71a5a49648b6094e179f

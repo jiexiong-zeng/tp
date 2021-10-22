@@ -1,7 +1,7 @@
 package command.parser;
 
-import command.Parser;
 import org.junit.jupiter.api.Test;
+import task.TaskList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,6 +21,13 @@ public class ParserTest {
         testParser.chooseTask("Help");
         assertEquals("Help", testParser.getTaskType());
         assertEquals("", testParser.getTaskDescription());
+    }
+
+    @Test
+    public void getTaskFromKeyword_keywordNotFound_printError() {
+        TaskList a = new TaskList();
+        a.addTask("cs1010", "Read Book A /by 12/12/2021 1600");
+        a.addTask("cs1010", "Read Book B /by 13/12/2021 1600");
     }
 
 }
